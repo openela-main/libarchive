@@ -2,7 +2,7 @@
 
 Name:           libarchive
 Version:        3.5.3
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        A library for handling streaming archive formats
 
 License:        BSD
@@ -18,6 +18,8 @@ Patch3: 	%{name}-3.5.3-Fix-size-filed-in-pax-header.patch
 Patch4:		%{name}-3.5.3-Fix-CVE-2022-36227.patch
 # Source: https://github.com/libarchive/libarchive/commit/c9bc934e7e91d302e0feca6e713ccc38d6d01532
 Patch5:		%{name}-3.5.3-Fix-CVE-2025-25724.patch
+# Source: https://github.com/libarchive/libarchive/commit/09685126fcec664e2b8ca595e1fc371bd494d209
+Patch6:		%{name}-3.5.3-Fix-CVE-2025-5914.patch
 
 BuildRequires:  automake
 BuildRequires:  bison
@@ -221,6 +223,9 @@ run_testsuite
 
 
 %changelog
+* Wed Aug 13 2025 Lukas Javorsky <ljavorsk@redhat.com> - 3.5.3-6
+- Resolves: CVE-2025-5914
+
 * Thu Jun 05 2025 Lukas Javorsky <ljavorsk@redhat.com> - 3.5.3-5
 - Resolves: CVE-2025-25724
 
