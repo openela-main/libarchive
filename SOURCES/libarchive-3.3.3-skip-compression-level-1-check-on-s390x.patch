@@ -1,0 +1,32 @@
+From cd35cd9eef0416dbdf7448becce35c752fc3772a Mon Sep 17 00:00:00 2001
+From: Masahiro Matsuya <mmatsuya@redhat.com>
+Date: Fri, 5 Jan 2024 11:33:12 +0900
+Subject: [PATCH] skip-compression-level-1-test-on-s390x
+
+---
+ libarchive/test/test_write_filter_gzip.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/libarchive/test/test_write_filter_gzip.c b/libarchive/test/test_write_filter_gzip.c
+index 935fb51..b824a77 100644
+--- a/libarchive/test/test_write_filter_gzip.c
++++ b/libarchive/test/test_write_filter_gzip.c
+@@ -226,10 +226,15 @@ DEFINE_TEST(test_write_filter_gzip)
+ 	assertEqualIntA(a, ARCHIVE_OK, archive_write_close(a));
+ 	assertEqualInt(ARCHIVE_OK, archive_write_free(a));
+ 
++	/* experiencing same size with compression-level=1 on s390x with libarchve-3.3.3
++	 * related to issues/1515.
++	 */
++	#if !defined(__s390x__)
+ 	/* Level 1 really does result in larger data. */
+ 	failure("Compression-level=1 wrote %d bytes; default wrote %d bytes",
+ 	    (int)used2, (int)used1);
+ 	assert(used2 > used1);
++	#endif	 /* __s390x__ */
+ 
+ 	/* Basic gzip header tests */
+ 	rbuff = (unsigned char *)buff;
+-- 
+2.43.0
+
