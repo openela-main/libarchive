@@ -2,7 +2,7 @@
 
 Name:           libarchive
 Version:        3.7.7
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        A library for handling streaming archive formats
 
 # Licenses:
@@ -50,6 +50,8 @@ Patch0002: 0002-Handle-truncation-in-the-middle-of-a-GNU-long-linkna.patch
 Patch0003: 0003-Fix-CVE-2025-25724.patch
 # Source: https://github.com/libarchive/libarchive/commit/09685126fcec664e2b8ca595e1fc371bd494d209
 Patch0004: 0004-rar-Fix-double-free-with-over-4-billion-nodes-2598.patch
+# Source: https://github.com/mmatuska/libarchive/commit/ec19fcbd20b18bd3b0fdcf2b3fb97789cd1bf575
+Patch0005: 0005-Infinite-loop-in-Rar5-decompression.patch
 
 %description
 Libarchive is a programming library that can create and read several different
@@ -248,6 +250,9 @@ run_testsuite
 
 
 %changelog
+* Mon Mar 16 2026 Lukas Javorsky <ljavorsk@redhat.com> - 3.7.7-5
+- Resolves: CVE-2026-4111
+
 * Wed Aug 13 2025 Lukas Javorsky <ljavorsk@redhat.com> - 3.7.7-4
 - Resolves: CVE-2025-5914
 
