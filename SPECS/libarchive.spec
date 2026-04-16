@@ -2,7 +2,7 @@
 
 Name:           libarchive
 Version:        3.5.3
-Release:        7%{?dist}
+Release:        9%{?dist}
 Summary:        A library for handling streaming archive formats
 
 License:        BSD
@@ -22,6 +22,11 @@ Patch5:		%{name}-3.5.3-Fix-CVE-2025-25724.patch
 Patch6:		%{name}-3.5.3-Fix-CVE-2025-5914.patch
 # Source: https://github.com/mmatuska/libarchive/commit/ec19fcbd20b18bd3b0fdcf2b3fb97789cd1bf575
 Patch7:		%{name}-3.5.3-Fix-CVE-2026-4111.patch
+# Source: https://github.com/libarchive/libarchive/pull/2898/changes/d379dc0b2976b7207d1ad78f5ed3eb99a5b6d375
+# and: https://github.com/libarchive/libarchive/pull/2898/changes/e1907c5832b6489c7b4198b0825f857c93a03c10
+Patch8:     %{name}-3.5.3-Fix-CVE-2026-4424.patch
+# Source: https://github.com/libarchive/libarchive/pull/2934/changes/889a228b71f2b1fab8dc5610f6c43ac0e9b92160
+Patch9:     %{name}-3.5.3-Fix-CVE-2026-5121.patch
 
 
 BuildRequires:  automake
@@ -229,6 +234,13 @@ run_testsuite
 
 
 %changelog
+* Thu Apr 09 2026 Pavol Sloboda <psloboda@redhat.com> - 3.5.3-9
+- Resolves: CVE-2026-4424
+- Resolves: CVE-2026-5121
+
+* Tue Mar 24 2026 Lukas Javorsky <ljavorsk@redhat.com> - 3.5.3-8
+- Release bump
+
 * Mon Mar 16 2026 Lukas Javorsky <ljavorsk@redhat.com> - 3.5.3-7
 - Resolves: CVE-2026-4111
 
