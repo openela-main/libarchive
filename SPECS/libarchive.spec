@@ -2,7 +2,7 @@
 
 Name:           libarchive
 Version:        3.3.3
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        A library for handling streaming archive formats
 
 License:        BSD
@@ -27,7 +27,11 @@ Patch12:	%{name}-3.3.3-Fix-size-filed-in-pax-header.patch
 Patch13:	%{name}-3.3.3-Fix-CVE-2022-36227.patch
 Patch14:	%{name}-3.3.3-Fix-CVE-2025-5914.patch
 Patch15:	%{name}-3.3.3-skip-compression-level-1-check-on-s390x.patch
-
+# Source: https://github.com/libarchive/libarchive/pull/2898/changes/d379dc0b2976b7207d1ad78f5ed3eb99a5b6d375
+# and: https://github.com/libarchive/libarchive/pull/2898/changes/e1907c5832b6489c7b4198b0825f857c93a03c10
+Patch16:    %{name}-3.3.3-Fix-CVE-2026-4424.patch
+# Source: https://github.com/libarchive/libarchive/pull/2934/changes/889a228b71f2b1fab8dc5610f6c43ac0e9b92160
+Patch17:    %{name}-3.3.3-Fix-CVE-2026-5121.patch
 
 BuildRequires:  gcc
 BuildRequires:  bison
@@ -234,6 +238,10 @@ run_testsuite
 
 
 %changelog
+* Wed Apr 08 2026 Pavol Sloboda <psloboda@redhat.com> - 3.3.3-7
+- Resolves: CVE-2026-4424
+- Resolves: CVE-2026-5121
+
 * Wed Aug 13 2025 Lukas Javorsky <ljavorsk@redhat.com> - 3.3.3-6
 - Resolves: CVE-2025-5914
 - Skip compression-level=1 size check on s390x.
