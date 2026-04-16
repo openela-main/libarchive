@@ -2,7 +2,7 @@
 
 Name:           libarchive
 Version:        3.7.7
-Release:        5%{?dist}
+Release:        8%{?dist}
 Summary:        A library for handling streaming archive formats
 
 # Licenses:
@@ -52,6 +52,9 @@ Patch0003: 0003-Fix-CVE-2025-25724.patch
 Patch0004: 0004-rar-Fix-double-free-with-over-4-billion-nodes-2598.patch
 # Source: https://github.com/mmatuska/libarchive/commit/ec19fcbd20b18bd3b0fdcf2b3fb97789cd1bf575
 Patch0005: 0005-Infinite-loop-in-Rar5-decompression.patch
+# Source: https://github.com/libarchive/libarchive/pull/2898/changes/d379dc0b2976b7207d1ad78f5ed3eb99a5b6d375
+# and: https://github.com/libarchive/libarchive/pull/2898/changes/e1907c5832b6489c7b4198b0825f857c93a03c10
+Patch0006: 0006-Fix-CVE-2026-4424.patch
 
 %description
 Libarchive is a programming library that can create and read several different
@@ -178,6 +181,17 @@ cat_logs ()
 run_testsuite ()
 {
     rc=0
+    # Workaround: libtool wrappers (e.g. ./bsdcpio) copy the real binary from
+    # .libs/bsdcpio to .libs/lt-bsdcpio and execute that, so argv[0] becomes
+    # "lt-bsdcpio". On filesystems with large inode numbers (e.g. ppc64le),
+    # cpio newc format tests emit truncation warnings containing the program
+    # name and fail because they expect "bsdcpio:" but get "lt-bsdcpio:".
+    # Fix by patching the wrapper scripts to not use the lt- prefix.
+    for f in bsdcpio bsdtar bsdcat bsdunzip; do
+        if [ -f "$f" ] && grep -q "lt-$f" "$f" 2>/dev/null; then
+            sed -i "s|lt-$f|$f|g" "$f"
+        fi
+    done
     %make_build check -j1 || {
         # error happened - try to extract in koji as much info as possible
         cat_logs
@@ -250,6 +264,15 @@ run_testsuite
 
 
 %changelog
+* Wed Apr 08 2026 Pavol Sloboda <psloboda@redhat.com> - 3.7.7-8
+- Resolves: CVE-2026-4424
+
+* Wed Mar 25 2026 Lukas Javorsky <ljavorsk@redhat.com> - 3.7.7-7
+- Release bump for typo in dist
+
+* Tue Mar 24 2026 Lukas Javorsky <ljavorsk@redhat.com> - 3.7.7-6
+- Release bump
+
 * Mon Mar 16 2026 Lukas Javorsky <ljavorsk@redhat.com> - 3.7.7-5
 - Resolves: CVE-2026-4111
 
