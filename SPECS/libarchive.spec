@@ -2,7 +2,7 @@
 
 Name:           libarchive
 Version:        3.7.7
-Release:        8%{?dist}
+Release:        10%{?dist}
 Summary:        A library for handling streaming archive formats
 
 # Licenses:
@@ -55,6 +55,10 @@ Patch0005: 0005-Infinite-loop-in-Rar5-decompression.patch
 # Source: https://github.com/libarchive/libarchive/pull/2898/changes/d379dc0b2976b7207d1ad78f5ed3eb99a5b6d375
 # and: https://github.com/libarchive/libarchive/pull/2898/changes/e1907c5832b6489c7b4198b0825f857c93a03c10
 Patch0006: 0006-Fix-CVE-2026-4424.patch
+# Source: https://github.com/libarchive/libarchive/commit/620bdafa26843ea4b86d97962ad972c5ec0a7986
+Patch0007: 0007-Fix-CVE-2026-14164_part1.patch
+# Source: https://github.com/libarchive/libarchive/pull/3071/changes/1c914cdfef533cbee1ae3aa21a89ba02ed4d5f61
+Patch0008: 0008-Fix-CVE-2026-14164_part2.patch
 
 %description
 Libarchive is a programming library that can create and read several different
@@ -264,6 +268,12 @@ run_testsuite
 
 
 %changelog
+* Wed Jul 15 2026 Pavol Sloboda <psloboda@redhat.com> - 3.7.7-10
+- Related: CVE-2026-14164
+
+* Tue Jun 30 2026 Pavol Sloboda <psloboda@redhat.com> - 3.7.7-9
+- Resolves: CVE-2026-14164
+
 * Wed Apr 08 2026 Pavol Sloboda <psloboda@redhat.com> - 3.7.7-8
 - Resolves: CVE-2026-4424
 
